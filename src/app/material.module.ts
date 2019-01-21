@@ -6,7 +6,7 @@ import { MatToolbarModule, MatIconModule, MatCardModule } from '@angular/materia
 const modules =  [
     MatToolbarModule,
     MatIconModule,
-    MatIconModule
+    MatCardModule
 ];
 
 @NgModule({
