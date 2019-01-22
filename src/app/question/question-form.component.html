@@ -5,5 +5,10 @@
     <mat-form-field>
         <input type="text" matInput placeholder="Descripción" name="description" ngModel>
     </mat-form-field>
+    <mat-grid-list cols="3" rowHeight="3:2">
+        <mat-grid-tile *ngFor="let icon of icons" >
+            <i mat-list-icon class="devicon-{{ icon.name }}-{{ getIconVersion(icon) }}"></i>
+        </mat-grid-tile>
+    </mat-grid-list>
     <button type="submit" mat-raised-button color="accent">Enviar</button>
 </form>
