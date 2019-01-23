@@ -6,6 +6,10 @@
         <input type="text" matInput placeholder="Descripción" name="description" ngModel>
     </mat-form-field>
     <mat-grid-list cols="3" rowHeight="3:2">
+        <mat-grid-tile>
+            <i mat-list-icon class="material-icons">help</i>
+            <small>Sin ícono</small>
+        </mat-grid-tile>
         <mat-grid-tile *ngFor="let icon of icons" >
             <i mat-list-icon class="devicon-{{ icon.name }}-{{ getIconVersion(icon) }}"></i>
         </mat-grid-tile>
