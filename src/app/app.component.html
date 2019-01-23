@@ -1,7 +1,10 @@
 <mat-toolbar color="primary">
-    <span [routerLink]="['/']">Example app</span>
-    <span class="space"></span>
-    <mat-icon [routerLink]="['/signin']">account_circle</mat-icon>
+    <div class="header-title">
+        <span [routerLink]="['/']">Example app</span>
+    </div>
+    <div class="header-icon">
+        <mat-icon [routerLink]="['/signin']">account_circle</mat-icon>
+    </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
 <!-- <app-question-detail></app-question-detail> -->
