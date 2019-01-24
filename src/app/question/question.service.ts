@@ -25,7 +25,16 @@ export class QuestionService {
             .catch(this.handleError);
     }
 
-    handleError() {
+    getQuestion(id): Promise<void | Question> {
+        const url = urljoin(this.questionUrl, id);
+        return this.http.get(url).toPromise()
+            .then(response => response as Question)
+            .catch(this.handleError);
+    }
+
+    handleError(error: any) {
+        const errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server Error';
+        console.log(errMsg);
 
     }
 }
