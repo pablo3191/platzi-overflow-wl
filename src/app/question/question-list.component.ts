@@ -23,6 +23,12 @@ import {QuestionService} from './question.service';
             right: 30px;
             font-size: 40px;
         }
+
+        mat-spinner {
+            position: absolute;
+            bottom: 45%;
+            left: 35%;
+        }
     `],
     providers: [QuestionService]
 })
@@ -48,6 +54,7 @@ export class QuestionListComponent implements OnInit {
             .getQuestions()
             .subscribe(res => {
                 this.questions = res;
+                this.loading = false;
             });
     }
 }
