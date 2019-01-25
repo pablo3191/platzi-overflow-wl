@@ -1,5 +1,9 @@
 import express from 'express'
+import cors from 'cors'
+
 const app = express.Router()
+
+app.use(cors())
 
 const question = {
     _id: 1,
@@ -7,7 +11,7 @@ const question = {
     description: 'Miren esta es mi pregunta...',
     createdAt: new Date(),
     icon: 'devicon-android-plain',
-    answer: [],
+    answers: [],
     user: {
         firstName: 'Sacha',
         lastName: 'Lifszyc',

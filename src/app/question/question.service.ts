@@ -3,7 +3,9 @@ import { Question } from './question.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable()
 
@@ -18,18 +20,30 @@ export class QuestionService {
  * response.json() dejo de existir en el uno de HttpClient, solo dejar responses
  * https://stackoverflow.com/questions/46005430/property-json-does-not-exist-on-type-object
  */
-    getQuestions(): Promise<void | Question[]> {
+    // getQuestions(): Promise<void | Question[]> {
+    //     return this.http.get(this.questionUrl)
+    //         .toPromise()
+    //         .then(response => response as Question[])
+    //         .catch(this.handleError);
+    // }
+
+    getQuestions(): Observable<Question[]> {
         return this.http.get(this.questionUrl)
-            .toPromise()
-            .then(response => response as Question[])
-            .catch(this.handleError);
+            .pipe(
+                map( res => {
+                    return res as Question[]
+                })
+            );
     }
 
-    getQuestion(id): Promise<void | Question> {
+    getQuestion(id): Observable<Question[]> {
         const url = urljoin(this.questionUrl, id);
-        return this.http.get(url).toPromise()
-            .then(response => response as Question)
-            .catch(this.handleError);
+        return this.http.get(url)
+            .pipe(
+                map( res => {
+                    return res as Question[]
+                })
+            );
     }
 
     handleError(error: any) {

@@ -29,8 +29,7 @@ import { MomentModule } from 'ngx-moment';
     SigninScreenComponent,
     SignupScreenComponent,
     QuestionListComponent,
-    QuestionFormComponent,
-    HttpClientModule
+    QuestionFormComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +38,8 @@ import { MomentModule } from 'ngx-moment';
     MaterialModule,
     MomentModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
