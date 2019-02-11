@@ -28,7 +28,7 @@ app.get('/', (req,res)=>{
 
 // /api/questions/:id
 app.get('/:id', (req, res) => {
-    res.status(200).json(question)
+    res.status(200).json(questions)
 })
 
 export default app
