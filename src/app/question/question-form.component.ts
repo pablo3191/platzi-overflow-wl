@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Question } from './question.model';
+import { User } from '../auth/user.model';
+
 import icons from './icons';
 
 @Component({
@@ -33,9 +35,11 @@ export class QuestionFormComponent {
     }
 
     onSubmit(form: NgForm) {
+        const u = new User('test@test.com','1234','test', 'test');
         const q = new Question(
             form.value.title,
             form.value.description,
+            u,
             new Date(),
             form.value.icon
         );

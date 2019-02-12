@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
     providers: [QuestionService]
 })
 
-export class QuestionDetailComponent implements OnInit {
+export class QuestionDetailComponent implements OnInit, OnDestroy {
     question?: Question;
     loading = true;
     sub: any;
@@ -32,4 +32,7 @@ export class QuestionDetailComponent implements OnInit {
         
     }
 
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
 }
