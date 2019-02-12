@@ -13,10 +13,10 @@ const question = {
     icon: 'devicon-android-plain',
     answers: [],
     user: {
-        firstName: 'Sacha',
-        lastName: 'Lifszyc',
         email: 'aaaa@aaa.com',
-        password: '1234'
+        password: '1234',
+        firstName: 'Sacha',
+        lastName: 'Lifszyc'
     }
 }
 
