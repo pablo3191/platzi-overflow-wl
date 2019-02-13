@@ -61,9 +61,17 @@ export class QuestionService {
 
 
     addAnswer(answer: Answer): Observable<Answer> {
-        const body = JSON.stringify(answer);
+        const a = {
+            description: answer.description,
+            question: {
+                _id: answer.question._id
+            }
+        };
+
+        const body = JSON.stringify(a);
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        const url = urljoin(this.questionUrl, answer.question._id, 'answers');
+        const id_answer = answer.question._id.toString();
+        const url = urljoin(this.questionUrl, id_answer, 'answers');
         return this.http.post(url, body, { headers })
             .pipe(
                 map( res => {

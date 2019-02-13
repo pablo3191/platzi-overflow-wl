@@ -87,7 +87,7 @@ app.post('/', userMiddleware, (req, res) => {
     res.status(201).json(question) 
 })
 
-app.post('/:id/answer', questionMiddleware, userMiddleware, (req, res) => {
+app.post('/:id/answers', questionMiddleware, userMiddleware, (req, res) => {
     const answer = req.body
     const q = req.question
     answer.createdAt = new Date()
