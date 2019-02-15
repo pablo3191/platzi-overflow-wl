@@ -1,5 +1,4 @@
 import express from 'express'
-import cors from 'cors'
 
 const app = express.Router()
 
@@ -21,8 +20,6 @@ function userMiddleware(req, res, next) {
     next()
 }
 
-
-app.use(cors())
 
 const question = {
     _id: 1,

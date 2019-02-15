@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from './user.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-signin-screen',
@@ -10,6 +11,8 @@ import { User } from './user.model';
 export class SigninScreenComponent implements OnInit {
 
     signinForm: FormGroup;
+
+    constructor(private authService: AuthService) { }
 
     ngOnInit() {
         this.signinForm = new FormGroup({
@@ -26,7 +29,10 @@ export class SigninScreenComponent implements OnInit {
         if (this.signinForm.valid) {
           const { email, password } = this.signinForm.value;
           const user = new User(email, password);
-          
+          this.authService.signIn(user)
+                .subscribe(
+                    this.authService.login,
+                )
           console.log(user);
         }
     }

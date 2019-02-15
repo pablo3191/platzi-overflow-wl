@@ -24,7 +24,12 @@ const findUserByEmail = e => users.find(({ email }) => email === e);
 // }
 
 function comparePasswords(providedPassword, userPassword) {
-    return providedPassword === userPassword
+    let compare = false
+    if (providedPassword === userPassword) {
+        compare = true
+    }
+    // console.log(`compare ${compare}`)
+    return compare
 } 
 
 function handleLoginFailed(res) {
@@ -37,6 +42,7 @@ function handleLoginFailed(res) {
 app.post('/signin', (req,res,next) => {
     const { email, password } = req.body
     const user = findUserByEmail(email)
+    let myMessageToken = {}
 
     if (!user) {
         debug(`user with email ${email} not found`)
@@ -49,15 +55,17 @@ app.post('/signin', (req,res,next) => {
     }
 
     const token = jwt.sign({ user }, secret, { expiresIn: 86400 })
-
-    res.status(200).json({
+    
+    myMessageToken = {
         message: 'Login succeded',
         token,
         userId: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email
-    })
+    }
+    console.log(myMessageToken)
+    res.status(200).json(myMessageToken)
 })
 
 

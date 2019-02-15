@@ -19,6 +19,8 @@ import { QuestionListComponent } from './question/question-list.component';
 import { QuestionFormComponent } from './question/question-form.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AuthService } from './auth/auth.service';
+
 import { MomentModule } from 'ngx-moment';
 
 @NgModule({
@@ -41,7 +43,7 @@ import { MomentModule } from 'ngx-moment';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

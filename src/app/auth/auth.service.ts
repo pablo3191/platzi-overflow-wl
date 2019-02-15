@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import urljoin from 'url-join';
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 
 @Injectable()
 export class AuthService {
@@ -12,7 +14,7 @@ export class AuthService {
     currentUser?: User;
 
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         this.usersUrl = urljoin(environment.apiUrl, 'auth');
         if (this.isLoggedIn()) {
             const { userId, email, firstName, lastName } = JSON.parse(localStorage.getItem('user'));
@@ -27,11 +29,10 @@ export class AuthService {
         return this.http.post(urljoin(this.usersUrl, 'signin'), body, { headers })
             .pipe(
                 map( (res: any) => {
-                        const json = res.json(); 
-                        this.login(json);
-                        return json;
+                        this.login(res);
+                        return res;
                     }),
-                    catchError((error: Response) => Observable.throw(error.json()))
+                    catchError(this.handleError)
                 );
     }
 
@@ -39,11 +40,25 @@ export class AuthService {
         this.currentUser = new User(email, null, firstName, lastName);
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify({ userId, firstName, lastName, email }));
-
+        this.router.navigateByUrl('/');
     }
 
     isLoggedIn() {
         return localStorage.getItem('token') !== null
+    }
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+            console.error('An error ocurred: ', error.error.message);
+        } else {
+            console.error(
+                error.error
+            );
+        }
+
+        return throwError(
+            'something bad happened; please try again later.'
+        );
     }
 
 }
