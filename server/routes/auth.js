@@ -9,7 +9,7 @@ const secret = 'miclavesecreta'
 
 const users = [
     {
-        email: 'aaaa@aaa.com',
+        email: 'test@test',
         password: '1234',
         firstName: 'Sacha',
         lastName: 'Lifszyc',
