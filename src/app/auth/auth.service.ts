@@ -47,6 +47,12 @@ export class AuthService {
         return localStorage.getItem('token') !== null
     }
 
+    logout() {
+        localStorage.clear();
+        this.currentUser = null;
+        this.router.navigateByUrl('/');
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             console.error('An error ocurred: ', error.error.message);
