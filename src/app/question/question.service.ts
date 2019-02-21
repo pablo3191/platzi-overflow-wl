@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Question } from './question.model';
 import { Answer } from '../answer/answer.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 
@@ -47,7 +47,7 @@ export class QuestionService {
             );
     }
 
-    addQuestion(question: Question): Observable<Question> {
+    addQuestion(question: Question): Observable<any> {
         const body = JSON.stringify(question);
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.http.post(this.questionUrl, body, { headers })
@@ -55,12 +55,12 @@ export class QuestionService {
                 map( res => {
                     return res as Question 
                     }),
-                    catchError((error: Response) => Observable.throw(error.json()))
+                    catchError(this.handleError)
                 );
     }
 
 
-    addAnswer(answer: Answer): Observable<Answer> {
+    addAnswer(answer: Answer): Observable<any> {
         const a = {
             description: answer.description,
             question: {
@@ -77,13 +77,27 @@ export class QuestionService {
                 map( res => {
                     return res as Answer 
                     }),
-                    catchError((error: Response) => Observable.throw(error.json()))
+                    catchError(this.handleError)
                 );
     }
 
-    handleError(error: any) {
-        const errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server Error';
-        console.log(errMsg);
+    // handleError(error: any) {
+    //     const errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server Error';
+    //     console.log(errMsg);
 
+    // }
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+            console.error('An error ocurred: ', error.error.message);
+        } else {
+            console.error(
+                error.error
+            );
+        }
+
+        return throwError(
+            'something bad happened; please try again later.'
+        );
     }
 }

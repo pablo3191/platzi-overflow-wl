@@ -1,27 +1,14 @@
 import express from 'express'
 import Debug from 'debug'
 import jwt from 'jsonwebtoken'
+import { secret } from '../config'
+import {
+    findUserByEmail,
+    users
+} from '../middleware'
 
 const app = express.Router()
 const debug = new Debug('platzi-overflow:auth')
-
-const secret = 'miclavesecreta'
-
-const users = [
-    {
-        email: 'test@test',
-        password: '1234',
-        firstName: 'Sacha',
-        lastName: 'Lifszyc',
-        _id: 123
-    }
-]
-
-const findUserByEmail = e => users.find(({ email }) => email === e);
-// otra forma de escribir la funcion:
-// function findUserByEmail(email) {
-//     return users.find(user => user.email === email)
-// }
 
 function comparePasswords(providedPassword, userPassword) {
     let compare = false
