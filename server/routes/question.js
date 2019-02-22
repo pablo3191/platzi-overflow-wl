@@ -18,18 +18,18 @@ app.get('/:id',questionMiddleware, (req, res) => {
     res.status(200).json(preguntas)
 })
 
-app.post('/', require, (req, res) => {
+app.post('/', required, questionsMiddleware, (req, res) => {
     const question = req.body
     question._id = +new Date()
     question.user = req.user
     question.createdAt = new Date()
     question.answers = []
 
-    questions.push(question)
+    req.questions.push(question)
     res.status(201).json(question) 
 })
 
-app.post('/:id/answers', require, questionMiddleware, (req, res) => {
+app.post('/:id/answers', required, questionMiddleware, (req, res) => {
     const answer = req.body
     const q = req.question
     answer.createdAt = new Date()

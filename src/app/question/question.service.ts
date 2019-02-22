@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { getToken } from '@angular/router/src/utils/preactivation';
 
 
 @Injectable()
@@ -47,10 +48,19 @@ export class QuestionService {
             );
     }
 
+    getToken() {
+        const token = localStorage.getItem('token');
+        return `?token=${token}`;
+    }
+
     addQuestion(question: Question): Observable<any> {
         const body = JSON.stringify(question);
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.post(this.questionUrl, body, { headers })
+        
+        const token = this.getToken();
+
+
+        return this.http.post(this.questionUrl + token, body, { headers })
             .pipe(
                 map( res => {
                     return res as Question 
@@ -72,7 +82,8 @@ export class QuestionService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const id_answer = answer.question._id.toString();
         const url = urljoin(this.questionUrl, id_answer, 'answers');
-        return this.http.post(url, body, { headers })
+        const token = this.getToken();
+        return this.http.post(url + token, body, { headers })
             .pipe(
                 map( res => {
                     return res as Answer 
