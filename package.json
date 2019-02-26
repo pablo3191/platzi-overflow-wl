@@ -34,6 +34,7 @@
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.23.0",
     "mongoose": "^5.4.15",
+    "mongoose-unique-validator": "^2.0.2",
     "ngx-moment": "^3.3.0",
     "nodemon": "^1.18.9",
     "rxjs": "^6.3.3",
