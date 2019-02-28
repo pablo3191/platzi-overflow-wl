@@ -3,19 +3,13 @@ import Debug from 'debug'
 import jwt from 'jsonwebtoken'
 import { secret } from '../config'
 import { User } from '../model'
-import { hashSync as hash } from 'bcryptjs'
+import { 
+    hashSync as hash,
+    compareSync as comparePasswords 
+} from 'bcryptjs'
 
 const app = express.Router()
 const debug = new Debug('platzi-overflow:auth')
-
-function comparePasswords(providedPassword, userPassword) {
-    let compare = false
-    if (providedPassword === userPassword) {
-        compare = true
-    }
-    // console.log(`compare ${compare}`)
-    return compare
-} 
 
 function handleLoginFailed(res, message) {
     return res.status(401).json({
