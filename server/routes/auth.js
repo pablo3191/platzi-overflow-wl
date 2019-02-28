@@ -2,10 +2,7 @@ import express from 'express'
 import Debug from 'debug'
 import jwt from 'jsonwebtoken'
 import { secret } from '../config'
-import {
-    findUserByEmail,
-    users
-} from '../middleware'
+import { User } from '../model'
 
 const app = express.Router()
 const debug = new Debug('platzi-overflow:auth')
@@ -26,9 +23,9 @@ function handleLoginFailed(res, message) {
     })
 }
 
-app.post('/signin', (req,res,next) => {
+app.post('/signin', async (req,res,next) => {
     const { email, password } = req.body
-    const user = findUserByEmail(email)
+    const user = await User.findOne({ email })
     let myMessageToken = {}
 
     if (!user) {
@@ -58,18 +55,19 @@ app.post('/signin', (req,res,next) => {
 const createToken = (user) => jwt.sign({ user }, secret, { expiresIn: 86400 })
 
 
-app.post('/signup', (req, res)=> {
+app.post('/signup', async (req, res)=> {
     const { firstName, lastName, email, password } = req.body
-    const user = {
-        _id: +new Date(),
+    const u = new User({
         firstName,
         lastName,
         email,
         password
-    }
+    })
 
     debug(`Creating new user ${user}`)
-    users.push(user)
+
+    const user = await u.save()
+
     const token = createToken(user)
     res.status(201).json( {
         message: 'User saved',
