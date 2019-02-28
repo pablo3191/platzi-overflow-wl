@@ -1,7 +1,7 @@
 import express from 'express'
 import { required } from '../middleware'
 import { Question } from '../db-api'
-
+import { handleError } from '../utils'
 const app = express.Router()
 
 // /api/questions
@@ -10,17 +10,22 @@ app.get('/', async (req,res)=>{
         const questions = await Question.findAll()
         res.status(200).json(questions)
     } catch (error) {
-        res.status(500).json({
-            message: 'se rompio todo',
-            error
-        })
+        console.error(error)
+        handleError(error, res)
     }
 })
 
-app.get('/:id', (req, res) => {
-    const preguntas = new Array(0)
-    preguntas.push(req.question)
-    res.status(200).json(preguntas)
+// GET /api/questions/:id
+app.get('/:id', async (req, res) => {
+    try {
+        const q = await Question.findById(req.params.id)
+        const preguntas = new Array(0)
+        preguntas.push(q)
+        res.status(200).json(preguntas)
+    } catch (error) {
+        console.error(error)
+        handleError(error, res)
+    }
 })
 
 app.post('/', required, (req, res) => {
