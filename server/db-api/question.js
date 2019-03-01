@@ -6,13 +6,13 @@ export default {
     findAll: async () => {
         debug('Finding all questions')
         console.log(`findAll`)
-        return await Question.find().populate('answers')
+        return Question.find().populate('answers')
     },
 
     findById: async (_id) => {
         debug(`Find question with id ${_id}`)
         console.log(`findById ${_id}`)
-        return await Question
+        return Question
             .findOne({ _id })
             .populate('user')
             .populate({
@@ -23,5 +23,12 @@ export default {
                     model: 'User'
                 }
             })
+    },
+
+    create: async (q) => {
+        debug(`Creating a new question ${q}`)
+        console.log(`La pregunta es: ${q}`)
+        const question = new Question(q)
+        return question.save()
     }
 }
