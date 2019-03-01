@@ -1,11 +1,10 @@
 import Debug from 'debug'
-import { Question } from '../model'
+import { Question, Answer } from '../model'
 const debug = new Debug('platzi-overflow:db-api:questions')
 
 export default {
     findAll: async () => {
         debug('Finding all questions')
-        console.log(`findAll`)
         return Question.find().populate('answers')
     },
 
@@ -30,5 +29,14 @@ export default {
         console.log(`La pregunta es: ${q}`)
         const question = new Question(q)
         return question.save()
+    },
+
+    createAnswer: async (q, a) => {
+        debug(`Creating a new answer: ${a} in a question: ${q}`)
+        const answer = new Answer(a)
+        const savedAnswer = await answer.save()
+        q.answers.push(savedAnswer)
+        await q.save()
+        return savedAnswer
     }
 }

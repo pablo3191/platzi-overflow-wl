@@ -8,7 +8,7 @@ const QuestionSchema = new Schema({
     icon: { type: String, required: true },
     createdAt: { type: Date, required: true, default: Date.now },
     user: { type: ObjectId, ref: 'User', required: true },
-    answers: [{ type: ObjectId, ref: 'Answer', default: []}]
+    answers: [{ type: ObjectId, ref: 'Answer', default: [] }]
 })
 
 const question = mongoose.model('Question', QuestionSchema)

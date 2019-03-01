@@ -1,7 +1,8 @@
 import express from 'express'
-import { required } from '../middleware'
+import { required, questionMiddleware } from '../middleware'
 import { Question } from '../db-api'
 import { handleError } from '../utils'
+import { User } from '../model';
 const app = express.Router()
 
 // /api/questions
@@ -16,9 +17,9 @@ app.get('/', async (req,res)=>{
 })
 
 // GET /api/questions/:id
-app.get('/:id', async (req, res) => {
+app.get('/:id', questionMiddleware, async (req, res) => {
     try {
-        const q = await Question.findById(req.params.id)
+        const q = req.question
         const preguntas = new Array(0)
         preguntas.push(q)
         res.status(200).json(preguntas)
@@ -44,13 +45,19 @@ app.post('/', required, async (req, res) => {
     }
 })
 
-app.post('/:id/answers', required, (req, res) => {
+app.post('/:id/answers', required, questionMiddleware, async (req, res) => {
     const answer = req.body
     const q = req.question
     answer.createdAt = new Date()
-    answer.user = req.user
-    q.answers.push(answer)
-    res.status(201).json(answer)
+    answer.user = new User(req.user)
+
+    try {
+        const savedAnswer = await Question.createAnswer(q, answer)
+        console.log(`la respuesta guardada es: ${savedAnswer}`)
+        res.status(201).json(savedAnswer)
+    } catch (error) {
+        handleError(error, res)
+    }
 })
 
 export default app
