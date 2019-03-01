@@ -15,8 +15,10 @@ import { QuestionDetailComponent } from './question/question-detail.component';
 import { AnswerFormComponent } from './answer/answer-form.component';
 import { SigninScreenComponent } from './auth/signin-screen.component';
 import { SignupScreenComponent } from './auth/signup-screen.component';
+import { QuestionScreenComponent } from './question/question-screen.component';
 import { QuestionListComponent } from './question/question-list.component';
 import { QuestionFormComponent } from './question/question-form.component';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { AuthService } from './auth/auth.service';
@@ -30,8 +32,10 @@ import { MomentModule } from 'ngx-moment';
     AnswerFormComponent,
     SigninScreenComponent,
     SignupScreenComponent,
+    QuestionScreenComponent,
     QuestionListComponent,
     QuestionFormComponent
+
   ],
   imports: [
     BrowserModule,

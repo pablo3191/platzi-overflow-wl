@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Question } from './question.model';
 import {QuestionService} from './question.service';
 
@@ -17,13 +17,6 @@ import {QuestionService} from './question.service';
             font-size: 48px !important;
         }
 
-        .add-question {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            font-size: 40px;
-        }
-
         mat-spinner {
             position: absolute;
             bottom: 45%;
@@ -37,6 +30,8 @@ export class QuestionListComponent implements OnInit {
 
     constructor(private questionService: QuestionService) {}
     
+    @Input() sort = '-createdAt';
+
     questions: Question[];
     loading = true;
 
@@ -51,7 +46,7 @@ export class QuestionListComponent implements OnInit {
 
     ngOnInit() {
         this.questionService
-            .getQuestions()
+            .getQuestions(this.sort)
             .subscribe(res => {
                 this.questions = res;
                 this.loading = false;

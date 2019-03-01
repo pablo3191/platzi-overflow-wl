@@ -8,7 +8,8 @@ const app = express.Router()
 // /api/questions
 app.get('/', async (req,res)=>{
     try {
-        const questions = await Question.findAll()
+        const { sort } = req.query
+        const questions = await Question.findAll(sort)
         res.status(200).json(questions)
     } catch (error) {
         console.error(error)

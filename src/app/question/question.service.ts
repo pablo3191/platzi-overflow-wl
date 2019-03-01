@@ -29,8 +29,8 @@ export class QuestionService {
     //         .catch(this.handleError);
     // }
 
-    getQuestions(): Observable<Question[]> {
-        return this.http.get(this.questionUrl)
+    getQuestions(sort = '-createdAt'): Observable<Question[]> {
+        return this.http.get(`${this.questionUrl}?sort=${sort}`)
             .pipe(
                 map( res => {
                     return res as Question[]

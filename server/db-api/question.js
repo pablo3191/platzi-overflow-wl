@@ -3,9 +3,9 @@ import { Question, Answer } from '../model'
 const debug = new Debug('platzi-overflow:db-api:questions')
 
 export default {
-    findAll: async () => {
+    findAll: async (sort = '-createdAt') => {
         debug('Finding all questions')
-        return Question.find().populate('answers')
+        return Question.find().populate('answers').sort(sort)
     },
 
     findById: async (_id) => {
