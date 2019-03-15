@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://serene-dusk-16559.herokuapp.com/'
 };
