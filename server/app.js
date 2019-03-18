@@ -1,6 +1,7 @@
 import express from 'express'
 import { question, auth } from './routes'
 import bodyParser from 'body-parser'
+import path from 'path'
 
 const app = express()
 const etapa = process.env.NODE_ENV.toString()
@@ -23,7 +24,11 @@ if (servidor(etapa)) {
       res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS')
       next()
     })
+} else {
+    app.use(express.static(path.join(process.cwd(), 'dist/platzi-overflow')))
 }
+
+
 
 app.use('/api/questions', question)
 app.use('/api/auth', auth)
