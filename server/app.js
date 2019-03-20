@@ -17,9 +17,6 @@ function servidor(deploy) {
     return devServer
 }
 
-app.use('/api/questions', question)
-app.use('/api/auth', auth)
-
 if (servidor(etapa)) {
     app.use((req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', '*')
@@ -28,11 +25,12 @@ if (servidor(etapa)) {
       next()
     })
 } else {
-    app.use('*',express.static(path.join(process.cwd(), 'dist/platzi-overflow')))
+    app.use('/dist', express.static(path.join(process.cwd(), 'platzi-overflow')))
 }
 
 
-
+app.use('/api/questions', question)
+app.use('/api/auth', auth)
 
 
 export default app
