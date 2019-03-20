@@ -25,7 +25,7 @@ if (servidor(etapa)) {
       next()
     })
 } else {
-    app.use('/dist', express.static(path.join(process.cwd(), 'platzi-overflow')))
+    app.use('/', express.static(path.join(process.cwd(), 'dist')))
 }
 
 
