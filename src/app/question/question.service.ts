@@ -34,7 +34,8 @@ export class QuestionService {
             .pipe(
                 map( res => {
                     return res as Question[]
-                })
+                }),
+                catchError(this.handleError)
             );
     }
 
@@ -44,7 +45,8 @@ export class QuestionService {
             .pipe(
                 map( res => {
                     return res as Question[]
-                })
+                }),
+                catchError(this.handleError)
             );
     }
 
